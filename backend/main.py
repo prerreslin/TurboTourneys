@@ -1,7 +1,14 @@
-from fastapi import FastAPI
+from fastapi import (APIRouter,
+                     FastAPI)
 
-from .routes import auth_router
+from .routes import (users_router,
+                     test_router)
 
 
 app = FastAPI()
-app.include_router(auth_router)
+
+api_router = APIRouter(prefix="/api")
+
+api_router.include_router(users_router)
+api_router.include_router(test_router)
+app.include_router(api_router)
