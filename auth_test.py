@@ -67,9 +67,8 @@ async def test_create_team():
             "foundation_date": datetime.now(),
             "players": [],
             "coach": "Andrei B1ad3 Gorodenskiy",
-            "achievements": [],
+            # "achievements": [],
             "social_media": [],
-            "sponsors": [],
             "logo": bytes(1),
             "active": True,
         }
