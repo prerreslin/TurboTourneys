@@ -13,7 +13,7 @@ class User(Base):
     password: Mapped[str]
 
     team_id: Mapped[int] = mapped_column(ForeignKey("teams.id"), nullable=True)
-    team: Mapped["Team"] = relationship("Team", back_populates="players", foreign_keys="[User.team_id]")
+    team: Mapped["Team"] = relationship(back_populates="roster")
 
-    team_coaching_id: Mapped[int] = mapped_column(ForeignKey("teams.id"), nullable=True)
-    team_coaching: Mapped["Team"] = relationship("Team", back_populates="coach", foreign_keys="[User.team_coaching_id]")
+    role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"), default=1)
+    role: Mapped["Role"] = relationship(back_populates="users")

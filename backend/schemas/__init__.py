@@ -1,7 +1,5 @@
-from .token import (Token,
-                    TokenData)
+from .token import Token, TokenData
 
-from .user import (UserModel,
-                   UserResponse)
+from .user import UserModel, UserResponse, UserEmail
 
 from .team import TeamScheme

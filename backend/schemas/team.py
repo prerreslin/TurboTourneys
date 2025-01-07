@@ -1,24 +1,21 @@
 from typing import Annotated, List, Optional
 from datetime import date, datetime
 
-from fastapi import File, UploadFile
+from fastapi import File, UploadFile, Form
 from pydantic import BaseModel, Field, field_validator
 
-from .user import UserModel
+from .user import UserEmail
 
 
 class TeamScheme(BaseModel):
     name: str
     region: str
     founded_year: date
-    players: List[UserModel]
-    coach: Optional[UserModel]
+    roster: Annotated[List[UserEmail], Form()]
     social_media: Optional[List[str]]
-    photo: Annotated[UploadFile, File(...)] 
+    logo: Annotated[UploadFile, File(...)] = None
     active: bool
 
-
-    
     @field_validator("name")
     @classmethod
     def check_name(cls, value: str):

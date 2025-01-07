@@ -34,5 +34,12 @@ class AsyncDB:
         async with cls.SESSION.begin() as session:
             yield session
 
+    @classmethod
+    async def create_roles(cls):
+        async with cls.SESSION.begin() as session:
+            player_role = Role(name="Player")
+            coach_role = Role(name="Coach")
+            session.add(player_role, coach_role)
 
-from .models import User,Team 
+
+from .models import User, Team, Role

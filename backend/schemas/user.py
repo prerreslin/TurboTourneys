@@ -23,9 +23,13 @@ class UserModel(BaseModel):
         value = get_password_hash(value)
 
         return value
-    
+
 
 class UserResponse(BaseModel):
     email: str
     name: str
     password: str
+
+
+class UserEmail(BaseModel):
+    email: EmailStr = Field(..., description="Email of user")

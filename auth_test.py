@@ -55,23 +55,3 @@ async def test_get_user():
         print(response.json())
 
     assert response.status_code == 200
-
-
-@pytest.mark.asyncio
-async def test_create_team():
-    async with AsyncClient(transport=ASGITransport(app=app), base_url=API_URL) as ac:
-        data = {
-            "name": "Zmiiny Testovy",
-            "region": "UA",
-            "game": "raid shadow legends",
-            "foundation_date": datetime.now(),
-            "players": [],
-            "coach": "Andrei B1ad3 Gorodenskiy",
-            # "achievements": [],
-            "social_media": [],
-            "logo": bytes(1),
-            "active": True,
-        }
-        response = await ac.post("/team/create", data=data)
-
-        assert response.status_code == 200

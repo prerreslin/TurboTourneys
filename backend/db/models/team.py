@@ -17,6 +17,4 @@ class Team(Base):
     logo: Mapped[bytes]
     active: Mapped[bool]
 
-    players: Mapped[List["User"]] = relationship("User", back_populates="team", foreign_keys="[User.team_id]")
-    coach: Mapped["User"] = relationship("User", back_populates="team_coaching", foreign_keys="[User.team_coaching_id]", uselist=False)
-
+    roster: Mapped[List["User"]] = relationship(back_populates="team")
