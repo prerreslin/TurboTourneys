@@ -3,3 +3,5 @@ from .token import (Token,
 
 from .user import (UserModel,
                    UserResponse)
+
+from .team import TeamScheme

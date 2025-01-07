@@ -35,4 +35,4 @@ class AsyncDB:
             yield session
 
 
-from .models import User
+from .models import User,Team 
