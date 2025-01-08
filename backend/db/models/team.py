@@ -18,3 +18,4 @@ class Team(Base):
     active: Mapped[bool]
 
     roster: Mapped[List["User"]] = relationship(back_populates="team")
+    ratings: Mapped[List["TeamRating"]] = relationship(back_populates="team")

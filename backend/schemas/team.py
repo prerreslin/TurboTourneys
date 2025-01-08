@@ -1,4 +1,4 @@
-from typing import Annotated, List, Optional
+from typing import Annotated, List, Optional, Set
 from datetime import date, datetime
 
 from fastapi import File, UploadFile, Form
@@ -11,7 +11,7 @@ class TeamScheme(BaseModel):
     name: str
     region: str
     founded_year: date
-    roster: Annotated[List[UserEmail], Form()]
+    roster: Set[UserEmail] = Field(...)
     social_media: Optional[List[str]]
     logo: Annotated[UploadFile, File(...)] = None
     active: bool
