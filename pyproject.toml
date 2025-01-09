@@ -75,6 +75,7 @@ aiohttp = "^3.11.11"
 asyncio = "^3.4.3"
 pytest-asyncio = "^0.25.1"
 pyjwt = "^2.10.1"
+pillow = "^11.1.0"
 
 
 [build-system]

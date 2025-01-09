@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from ..schemas import Token, UserModel, UserResponse
 from ..utils import authenticate_user, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
-from ..db import AsyncDB, User
+from ..db import AsyncDB, User, Role
 
 
 users_router = APIRouter(prefix="/user", tags=["User"])
@@ -46,7 +46,11 @@ async def register_user(
     user = await session.scalar(select(User).where(User.name == data.name))
     if user:
         raise HTTPException(status_code=400, detail="Nickname already registered")
-    user = User(**data.model_dump())
+
+    role = await session.scalar(select(Role).where(Role.name == "Player"))
+    data_user = data.model_dump()
+    data_user["role_id"] = role.id
+    user = User(**data_user)
     session.add(user)
     return user
 
