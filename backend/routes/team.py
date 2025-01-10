@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, Form, status
 from sqlalchemy import select
 
 from ..schemas import TeamScheme
-from ..db import AsyncDB, Team, User
+from ..db import AsyncDB, Team, User, TeamRating, Game
 
 
 team_router = APIRouter(prefix="/team", tags=["Team"])
@@ -30,7 +30,6 @@ async def test_create(session=Depends(AsyncDB.get_session)):
         logo = logo.read()
 
     user = await session.scalar(select(User).where(User.email == "user@example.com"))
-
     team = Team(
         name="TestName",
         region="TestRegion",
@@ -41,4 +40,11 @@ async def test_create(session=Depends(AsyncDB.get_session)):
         active=True,
     )
     session.add(team)
+
+    test_game = await session.scalar(
+        select(Game).where(Game.name == "Raid Shadow Legends")
+    )
+    team_testgame_rating = TeamRating(elo=100, team=team, game=test_game)
+    session.add(team_testgame_rating)
+
     return {"message": "done"}

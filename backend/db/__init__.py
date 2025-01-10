@@ -42,5 +42,11 @@ class AsyncDB:
             coach_role = Role(name="Coach")
             session.add(player_role, coach_role)
 
+    @classmethod
+    async def create_games(cls):
+        async with cls.SESSION.begin() as session:
+            raid_sh = Game(name="Raid Shadow Legends", description="TEst")
+            session.add(raid_sh)
 
-from .models import User, Team, Role
+
+from .models import User, Team, Role, Game, TeamRating
