@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, Form, status
 from sqlalchemy import select
 
 from ..schemas import TeamScheme
+from ..utils import get_current_user
 from ..db import AsyncDB, Team, User, TeamRating, Game
 
 
@@ -48,3 +49,31 @@ async def test_create(session=Depends(AsyncDB.get_session)):
     session.add(team_testgame_rating)
 
     return {"message": "done"}
+
+
+# @team_router.get("/my_team")
+# async def my_team(
+#     current_user: Annotated[User, Depends(get_current_user)],
+#     session=Depends(AsyncDB.get_session),
+# ):
+#     team = await session.scalar(select(Team).where(Team.id == current_user.team_id))
+
+#     if team:
+#         return await TeamScheme.model_validate(team)
+#     return {"message": "No team found"}
+
+
+# @team_router.get("/leave_team")
+# async def leave_team(
+#     current_user: Annotated[User, Depends(get_current_user)],
+#     session=Depends(AsyncDB.get_session),
+# ):
+#     if current_user.team:
+#         current_user.team.roster.remove(current_user)
+#         current_user.team_id = None
+#         current_user.team = None
+
+#     await session.commit()
+
+#     user_team = current_user.team
+#     return user_team
