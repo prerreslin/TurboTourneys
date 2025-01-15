@@ -14,7 +14,7 @@ class Team(Base):
     region: Mapped[str]
     founded_year: Mapped[date]
     social_media: Mapped[str] = mapped_column(nullable=True)
-    logo: Mapped[bytes]
+    logo_path: Mapped[str]
     active: Mapped[bool]
 
     roster: Mapped[List["User"]] = relationship(back_populates="team")
