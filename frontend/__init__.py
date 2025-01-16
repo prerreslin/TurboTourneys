@@ -11,7 +11,7 @@ SECRET_KEY = getenv("SECRET_KEY")
 
 flask_app = Flask(__name__)
 
-app.config["SECRET_KEY"] = SECRET_KEY
+flask_app.config["SECRET_KEY"] = SECRET_KEY
 
 
 from . import routes
