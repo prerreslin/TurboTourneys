@@ -55,6 +55,6 @@ class TeamCreateForm(FlaskForm):
             validators=[DataRequired(), logo_check]
     )
 
-    team_members = FieldList("Team Members:", FormField(MemberForm), validators=validate_choices)
+    team_members = FieldList("Team Members:", FormField(MemberForm), validators=validate_choices, min_entries=3, max_entries=5)
 
     submit = SubmitField("Create Team")
