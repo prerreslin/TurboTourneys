@@ -11,9 +11,9 @@ class TeamScheme(BaseModel):
     name: str
     region: str
     founded_year: date
-    roster: List[UserEmail] = Field(...)
-    social_media: Optional[List[str]]
-    logo: Annotated[UploadFile, File(...)] | bytes = None
+    # roster: List[UserEmail] = Field(...)
+    social_media: Optional[str]
+    # logo: Annotated[UploadFile, File(...)] | bytes = None
     active: bool
 
     @field_validator("name")
@@ -22,5 +22,3 @@ class TeamScheme(BaseModel):
         if len(value) < 2:
             raise ValueError("The team name cannot be less than 2 letters long")
         return value
-
-    model_config = ConfigDict(from_attributes=True)

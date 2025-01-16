@@ -1,9 +1,10 @@
 from os import getenv
-from typing import Annotated
+from typing import Annotated, List
 from datetime import datetime
 
 from fastapi import APIRouter, Depends, Form, status
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 from dotenv import load_dotenv
 
 from ..schemas import TeamScheme
@@ -19,16 +20,16 @@ STATIC_URL = getenv("STATIC_URL")
 @team_router.post("/create_team", status_code=status.HTTP_201_CREATED)
 async def create_team(
     data: Annotated[TeamScheme, Form(media_type="multipart/form-data")],
-    session=Depends(AsyncDB.get_session),
+    current_user: Annotated[User, Depends(get_current_user)],
+    session: Annotated[
+        AsyncSession,
+        Depends(AsyncDB.get_session),
+    ],
 ):
-    logo = await data.photo.read()
-    logo_path = f"{STATIC_URL}/logos/{data.photo.filename}"
-    with open(logo_path, "wb") as buffer:
-        buffer.write(logo)
 
     data_dict = data.model_dump()
-    data_dict.pop("logo", None)
-    team = Team(**data_dict, logo_path=logo_path)
+    team = Team(**data_dict)
+    team.roster.append(current_user)
     session.add(team)
     return "Team Created"
 
