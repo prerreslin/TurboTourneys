@@ -70,20 +70,20 @@ async def my_team(
     return {"message": "No team found"}
 
 
-# @team_router.get("/leave_team")
-# async def leave_team(
-#     current_user: Annotated[User, Depends(get_current_user)],
-#     session=Depends(AsyncDB.get_session),
-# ):
-#     current_user = await session.scalar(select(User).where)
+@team_router.get("/leave_team")
+async def leave_team(
+    current_user: Annotated[User, Depends(get_current_user)],
+    session=Depends(AsyncDB.get_session),
+):
+    current_user = await session.scalar(select(User).where(User.id == current_user.id))
 
-#     if current_user.team:
-#         current_user.team.roster.remove(current_user)
-#         current_user.team_id = None
-#         current_user.team = None
+    if current_user.team:
+        current_user.team.roster.remove(current_user)
+        current_user.team_id = None
+        current_user.team = None
 
-#         await session.commit()
+        await session.commit()
 
-#         return {"message": "You have left the team"}
+        return {"message": "You have left the team"}
 
-#     return {"message": "You are not in team now"}
+    return {"message": "You are not in team now"}
