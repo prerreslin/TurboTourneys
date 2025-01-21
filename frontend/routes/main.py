@@ -6,5 +6,12 @@ from ..forms import RegisterForm, LoginForm
 
 
 @flask_app.get("/")
-def index():
-    return render_template("index.html")
+async def index():
+    async with AsyncClient(
+            transport=ASGITransport(app=app), base_url=API_URL
+        ) as ac:
+        ...
+    tournaments = await ac.get("/tournaments/")
+
+    return render_template("index.html", tournaments=tournaments)
+
