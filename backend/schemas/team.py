@@ -11,9 +11,7 @@ class TeamScheme(BaseModel):
     name: str
     region: str
     founded_year: date
-    # roster: List[UserEmail] = Field(...)
     social_media: Optional[str]
-    # logo: Annotated[UploadFile, File(...)] | bytes = None
     active: bool
 
     @field_validator("name")

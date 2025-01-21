@@ -11,7 +11,7 @@ class Base(DeclarativeBase):
 
 
 class AsyncDB:
-    ENGINE = create_async_engine("sqlite+aiosqlite:///users.db")
+    ENGINE = create_async_engine("sqlite+aiosqlite:///database.db")
     SESSION = sessionmaker(bind=ENGINE, class_=AsyncSession)
 
     @classmethod
