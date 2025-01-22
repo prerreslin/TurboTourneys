@@ -7,11 +7,13 @@ from ..forms import RegisterForm, LoginForm
 
 @flask_app.get("/")
 async def index():
-    async with AsyncClient(
-            transport=ASGITransport(app=app), base_url=API_URL
-        ) as ac:
-        ...
-    tournaments = await ac.get("/tournaments/")
 
-    return render_template("index.html", tournaments=tournaments)
+    return render_template("index.html")
 
+
+
+@flask_app.get("/search")
+async def search():
+    query = request.args.get('query','')
+    if query:
+        return render_template("index.html", query = query)

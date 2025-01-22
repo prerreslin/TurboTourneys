@@ -25,11 +25,17 @@
 <script>
     async function fetchData() {
         try {
-            const response = await fetch('/tournaments'); // Link work in progress
+            const response = await fetch('localhost:1000/tournaments'); // Link work in progress
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = await response.json();
+            let data = await response.json();
+            if (query) {
+                let filtered = data.filter(tournament => tournament.name.toLowerCase().includes(query.toLowerCase()));
+                data = filtered
+            }
+            
+        
             const container = document.getElementById('parent');
             container.innerHTML = '';
             data.forEach(item => {
@@ -38,7 +44,7 @@
                 `<div class="container">
                     <div class="objects">
                         <a href="/tournament/{{ tournament.id }}">
-                            <h2>{{ tournament.title }}</h2>
+                            <h2>{{ tournament.name }}</h2>
                             <h3><span class="badge badge-primary">{{ tournament.date }}$</span></h3>
                         </a>
                         <a type="button" href="tournament/register/{{ tournament.id }}" >Register</a>
