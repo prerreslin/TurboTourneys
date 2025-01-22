@@ -13,22 +13,22 @@ from wtforms.validators import (
 
 
 class RegisterForm(FlaskForm):
-    email = EmailField(
+    email = EmailField( "Enter your Email Address:",
         validators=[
             DataRequired(),
             Email(),
         ]
     )
 
-    name = StringField(
+    name = StringField("Enter your name:",
         validators=DataRequired(),
     )
 
-    password = PasswordField(
+    password = PasswordField("Enter your password:",
         validators=[
             DataRequired(),
         ]
     )
-    password_confirm = PasswordField(validators=[DataRequired(), EqualTo("password")])
+    password_confirm = PasswordField("Re-enter your pasword:", validators=[DataRequired(), EqualTo("password")])
 
     submit = SubmitField("Register")
