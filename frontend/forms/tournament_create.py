@@ -37,10 +37,10 @@ def time_valitade(form, field):
         raise ValidationError("Minutes should be within 60")
 
 class TournamentCreate(FlaskForm):
-    name = StringField("Enter the tournament name:", validators= (Length(3, 30, "Tournament name should be between 3 and 30 symbols"), DataRequired()))
-    description= StringField("Enter the tournament description:",validators= (Length(1, 500, "Tournament name should be less than 500 characters"), DataRequired()))
-    winnings = StringField("Enter the tournament winnings:",validators=DataRequired())
-    join_cost = StringField("Enter the tournament join cost:",validators=cost_validate)
-    date = StringField("Enter the tournaments date(YYYY/MM/DD):",validators=(DataRequired(), date_validate))
-    time = StringField("Enter the tournaments time(HH:MM)",validators=(DataRequired(), time_valitade))
+    name = StringField("Enter the tournament name:", validators=[Length(3, 30, "Tournament name should be between 3 and 30 symbols"), DataRequired()])
+    description= StringField("Enter the tournament description:",validators=[Length(1, 500, "Tournament name should be less than 500 characters"), DataRequired()])
+    winnings = StringField("Enter the tournament winnings:",validators=[DataRequired()])
+    join_cost = StringField("Enter the tournament join cost:",validators=[cost_validate])
+    date = StringField("Enter the tournaments date(YYYY/MM/DD):",validators=[DataRequired(), date_validate])
+    time = StringField("Enter the tournaments time(HH:MM)",validators=[DataRequired(), time_valitade])
     submit = SubmitField("Create Tournament")

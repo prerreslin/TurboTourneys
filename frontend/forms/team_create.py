@@ -16,7 +16,6 @@ from wtforms.validators import DataRequired, EqualTo, Email, Length, ValidationE
 
 MAX_FILE_SIZE = 1 * 1024 * 1024
 img = Image
-img.thumbnail
 
 def logo_check(form, field):
     file = field.data
@@ -39,8 +38,8 @@ def validate_choices(self, field):
 
     
 class MemberForm(FlaskForm):
-    name = StringField(validators=DataRequired())
-    role = SelectField(choices=["Captain, Member, Substitiute"], validators=DataRequired())
+    name = StringField(validators=[DataRequired()])
+    role = SelectField(choices=["Captain, Member, Substitiute"], validators=[DataRequired()])
 
 
 class TeamCreateForm(FlaskForm):
@@ -55,6 +54,6 @@ class TeamCreateForm(FlaskForm):
             validators=[DataRequired(), logo_check]
     )
 
-    team_members = FieldList("Team Members:", FormField(MemberForm), validators=validate_choices, min_entries=3, max_entries=5)
+    team_members = FieldList("Team Members:", FormField(MemberForm), validators=[validate_choices], min_entries=3, max_entries=5)
 
     submit = SubmitField("Create Team")

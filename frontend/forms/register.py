@@ -21,7 +21,7 @@ class RegisterForm(FlaskForm):
     )
 
     name = StringField("Enter your name:",
-        validators=DataRequired(),
+        validators=[DataRequired()]
     )
 
     password = PasswordField("Enter your password:",

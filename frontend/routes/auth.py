@@ -39,7 +39,7 @@ def login():
 
 
 @flask_app.post("/login")
-async def register_post():
+async def login_post():
     form = RegisterForm()
     if form.validate_on_submit():
         async with AsyncClient(
