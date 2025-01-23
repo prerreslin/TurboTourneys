@@ -49,4 +49,4 @@ class AsyncDB:
             session.add(raid_sh)
 
 
-from .models import User, Team, Role, Game, TeamRating
+from .models import User, Team, Role, Game, TeamRating, Tournament
