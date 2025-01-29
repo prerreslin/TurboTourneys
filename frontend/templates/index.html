@@ -1,0 +1,71 @@
+{% extends "__base.html"%} {% block title %}Home{% endblock %}
+{% block content %}
+  <h1>{% block title %} Turbo Tourneys {% endblock %}</h1>
+  
+  {% if tournaments %}
+      <div class="parent" id="parent">
+        {% for tournament in tournaments %}
+        <div class="container">
+          <div class="objects">
+            <a href="/tournament/{{ tournament.id }}">
+              <h2>{{ tournament.title }}</h2>
+              <h3><span class="badge badge-primary">{{ tournament.date }}$</span></h3>
+            </a>
+            <a type="button" href="tournament/register/{{ tournament.id }}" >Register</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+  {% endif %}  
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    async function fetchData() {
+        try {
+            const response = await fetch('localhost:1000/tournaments'); // Link work in progress
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            let data = await response.json();
+            if (query) {
+                let filtered = data.filter(tournament => tournament.name.toLowerCase().includes(query.toLowerCase()));
+                data = filtered
+            }
+            
+        
+            const container = document.getElementById('parent');
+            container.innerHTML = '';
+            data.forEach(item => {
+                const post = document.createElement('div');
+                post.innerHTML = 
+                `<div class="container">
+                    <div class="objects">
+                        <a href="/tournament/{{ tournament.id }}">
+                            <h2>{{ tournament.name }}</h2>
+                            <h3><span class="badge badge-primary">{{ tournament.date }}$</span></h3>
+                        </a>
+                        <a type="button" href="tournament/register/{{ tournament.id }}" >Register</a>
+                    </div>
+                </div>`;
+                post.style.border = '1px solid #ddd';
+                post.style.margin = '10px';
+                post.style.padding = '10px';
+                container.appendChild(post);
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An errror has occured while fetching data');
+        }
+    }
+    
+    setInterval(fetchData, 20000);
+    
+
+    fetchData();
+</script>
+
+
+{% endblock %}

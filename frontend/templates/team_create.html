@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Team</title>
+    <script>
+        function addField() {
+            const fieldList = document.getElementById('field-list');
+            const totalForms = document.getElementById('total-forms');
+            const newIndex = fieldList.children.length;
+
+
+            const newField = document.createElement('div');
+            newField.className = 'field';
+            newField.innerHTML = `
+                <label for="items-${newIndex}-name">Member Name:</label>
+                <input type="text" name="items-${newIndex}-name" id="items-${newIndex}-name">
+
+                <label for="items-${newIndex}-description">Member Role:</label>
+                <input type="text" name="items-${newIndex}-description" id="items-${newIndex}-description">
+
+                <button type="button" onclick="removeField(this)">Remove</button>
+            `;
+            
+
+            fieldList.appendChild(newField);
+
+
+            totalForms.value = newIndex + 1;
+        }
+
+        function removeField(button) {
+            const field = button.parentElement;
+            field.remove();
+
+
+            const totalForms = document.getElementById('total-forms');
+            totalForms.value = document.getElementById('field-list').children.length;
+        }
+    </script>
+</head>
+<body>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        
+
+        <label for="team_name">Team Name:</label>
+        {{ form.team_name }}
+
+        <label for="logo">Logo:</label>
+        {{ form.logo }}
+
+
+        <div id="field-list">
+            {% for entry in form.team_members %}
+                <div class="field">
+                    <label for="items-{{ loop.index0 }}-name">Member Name:</label>
+                    {{ entry.name }}
+
+                    <label for="items-{{ loop.index0 }}-description">Member Role:</label>
+                    {{ entry.role }}
+                </div>
+            {% endfor %}
+        </div>
+        <input type="hidden" id="total-forms" name="items-__len__" value="{{ form.items.__len__() }}">
+        <button type="button" onclick="addField()">Add Field</button>
+
+
+
+        {{ form.submit }}
+    </form>
+</body>
+</html>
